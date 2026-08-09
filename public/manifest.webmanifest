@@ -1,0 +1,15 @@
+{
+  "name": "محاكي قرعة الحج",
+  "short_name": "قرعة الحج",
+  "description": "محاكاة مستقلة لقرعة الحج السياحي",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8f6ef",
+  "theme_color": "#154734",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

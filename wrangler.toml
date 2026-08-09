@@ -1,0 +1,5 @@
+name = "hajj-lottery-simulator"
+compatibility_date = "2026-08-09"
+pages_build_output_dir = "dist"
+
+# Bind a Cloudflare D1 database to this Pages project using binding name: DB
