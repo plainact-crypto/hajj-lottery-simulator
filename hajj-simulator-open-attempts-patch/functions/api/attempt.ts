@@ -10,35 +10,6 @@ interface Payload {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-async function readStats(db: D1Database, email: string) {
-  const current = await db.prepare(`
-    SELECT attempt_count, win_count, loss_count
-    FROM leads
-    WHERE email = ?
-  `).bind(email).first<{
-    attempt_count: number;
-    win_count: number;
-    loss_count: number;
-  }>();
-
-  return {
-    attempts: Number(current?.attempt_count || 0),
-    wins: Number(current?.win_count || 0),
-    losses: Number(current?.loss_count || 0),
-  };
-}
-
-export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const url = new URL(context.request.url);
-  const email = String(url.searchParams.get('email') || '').trim().toLowerCase();
-
-  if (!EMAIL_RE.test(email)) {
-    return Response.json({ error: 'invalid_email' }, { status: 400 });
-  }
-
-  return Response.json(await readStats(context.env.hajj_lottery_db, email));
-};
-
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const body = await context.request.json<Payload>().catch(() => ({}));
   const email = String(body.email || '').trim().toLowerCase();
@@ -76,8 +47,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       updated_at = CURRENT_TIMESTAMP
   `).bind(email, won, lost, body.marketingOptIn ? 1 : 0).run();
 
+  const current = await context.env.hajj_lottery_db.prepare(`
+    SELECT attempt_count, win_count, loss_count
+    FROM leads
+    WHERE email = ?
+  `).bind(email).first<{
+    attempt_count: number;
+    win_count: number;
+    loss_count: number;
+  }>();
+
   return Response.json({
-    ...(await readStats(context.env.hajj_lottery_db, email)),
+    attempts: Number(current?.attempt_count || 0),
+    wins: Number(current?.win_count || 0),
+    losses: Number(current?.loss_count || 0),
     persistedRemotely: true,
   });
 };

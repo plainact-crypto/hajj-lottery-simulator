@@ -1,0 +1,5 @@
+This patch removes the three-attempt limit and records unlimited per-email statistics: attempts, wins, and losses.
+After extracting with overwrite, delete the obsolete files if present:
+src/utils/attemptLimit.ts
+src/utils/attemptLimit.test.ts
+Then run the D1 schema and redeploy.

@@ -87,3 +87,11 @@ main { flex: 1; }
 .ritual-timeline { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 16px; }.ritual-timeline span { padding: 7px 10px; border-radius: 999px; background: #eef3ef; border: 1px solid #d7e1da; font-size: .68rem; }.ritual-timeline b { color: var(--gold); }
 .systems-grid { display: grid; gap: 12px; margin: 20px 0; }.systems-grid section { padding: 16px; border: 1px solid #e2dfd4; border-radius: 16px; background: #faf9f5; }.systems-grid section h2 { margin-top: 0; }.systems-grid section p { margin-bottom: 0; }
 @media (min-width: 760px) { .systems-grid { grid-template-columns: 1fr 1fr; } }
+
+/* Persistent user draw statistics */
+.stats-strip { width: min(100%, 430px); margin: 0 auto 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stats-strip > div { min-height: 62px; padding: 9px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,.92); border: 1px solid #ded8c9; border-radius: 15px; box-shadow: 0 8px 22px rgba(28,63,50,.06); }
+.stats-strip span { color: var(--muted); font-size: .65rem; font-weight: 700; }
+.stats-strip strong { margin-top: 2px; color: var(--green); font-family: 'Noto Naskh Arabic', serif; font-size: 1.45rem; line-height: 1; }
+.stats-strip > div:nth-child(2) strong { color: #187447; }
+.stats-strip > div:nth-child(3) strong { color: #7a6252; }

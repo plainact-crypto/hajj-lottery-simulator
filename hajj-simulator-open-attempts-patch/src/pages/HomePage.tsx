@@ -6,7 +6,7 @@ import { ResultCard } from '../components/ResultCard';
 import { DRAW_ANIMATION_MS } from '../config';
 import { HAJJ_LEVELS, getHajjLevel, type HajjLevelId } from '../data/hajjLevels';
 import { INITIAL_ATTEMPT, resetAttempt, type AttemptState } from '../utils/attempt';
-import { getAttemptStats, recordAttempt, type AttemptStats } from '../utils/attemptStats';
+import { recordAttempt, type AttemptStats } from '../utils/attemptStats';
 import { isWinningDraw, secureRandom } from '../utils/lottery';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,12 +24,6 @@ export function HomePage() {
   const timeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
-
-  const loadStats = async () => {
-    if (!EMAIL_RE.test(email.trim())) return;
-    const currentStats = await getAttemptStats(email);
-    setStats(currentStats);
-  };
 
   const startDraw = async (event: FormEvent) => {
     event.preventDefault();
@@ -64,11 +58,6 @@ export function HomePage() {
   return (
     <div className="home-page page-container">
       <section className="hero">
-        <div className="stats-strip" aria-label="سجل المحاولات">
-          <div><span>المحاولات</span><strong>{stats?.attempts ?? 0}</strong></div>
-          <div><span>فوز</span><strong>{stats?.wins ?? 0}</strong></div>
-          <div><span>خسارة</span><strong>{stats?.losses ?? 0}</strong></div>
-        </div>
         <div className="hero-emblem" aria-hidden="true"><span>🕋</span></div>
         <span className="unofficial-badge">محاكاة غير رسمية</span>
         <h1>محاكي قرعة الحج</h1>
@@ -88,7 +77,7 @@ export function HomePage() {
           </div>
           <div className="field">
             <label htmlFor="email">البريد الإلكتروني</label>
-            <div className="input-wrap"><span aria-hidden="true">@</span><input id="email" type="email" value={email} onChange={(event) => { setEmail(event.target.value); setStats(null); }} onBlur={loadStats} placeholder="name@example.com" autoComplete="email" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} /></div>
+            <div className="input-wrap"><span aria-hidden="true">@</span><input id="email" type="email" value={email} onChange={(event) => { setEmail(event.target.value); setStats(null); }} placeholder="name@example.com" autoComplete="email" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} /></div>
             {errors.email && <span id="email-error" className="field-error">{errors.email}</span>}
           </div>
           <div className="field">
