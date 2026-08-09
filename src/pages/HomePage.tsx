@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+﻿import { FormEvent, useEffect, useRef, useState } from 'react';
 import { AdSlot } from '../components/AdSlot';
 import { CompanyAutocomplete } from '../components/CompanyAutocomplete';
 import { LoadingDraw } from '../components/LoadingDraw';
@@ -12,7 +12,7 @@ import { isWinningDraw, secureRandom } from '../utils/lottery';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function HomePage() {
-  const [name, setName] = useState('محمد أسامة');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [remainingAttempts, setRemainingAttempts] = useState<number | null>(null);
@@ -105,3 +105,4 @@ export function HomePage() {
     </div>
   );
 }
+
