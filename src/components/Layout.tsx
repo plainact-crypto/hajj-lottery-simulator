@@ -8,9 +8,8 @@ const links = [
   ['/hajj-levels', 'مستويات الحج'],
   ['/rituals', 'مناسك الحج'],
   ['/hajj-systems-world', 'أنظمة الحج حول العالم'],
+  ['/articles-sources', 'المقالات والمصادر'],
   ['/about', 'عن الموقع'],
-  ['/privacy', 'سياسة الخصوصية'],
-  ['/disclaimer', 'إخلاء المسؤولية'],
 ] as const;
 
 export function Layout() {
@@ -38,7 +37,16 @@ export function Layout() {
       <footer className="site-footer">
         <Disclaimer />
         <p>محاكي قرعة الحج — مشروع مستقل غير رسمي</p>
-        <p className="footer-links"><Link to="/privacy">الخصوصية</Link><span>•</span><Link to="/disclaimer">إخلاء المسؤولية</Link></p>
+        <p className="footer-links">
+          <Link to="/how-it-works">كيف تعمل المحاكاة</Link><span>•</span>
+          <Link to="/hajj-levels">مستويات الحج</Link><span>•</span>
+          <Link to="/rituals">المناسك</Link><span>•</span>
+          <Link to="/hajj-systems-world">أنظمة الحج</Link><span>•</span>
+          <Link to="/articles-sources">المصادر</Link><span>•</span>
+          <Link to="/about">عن الموقع</Link><span>•</span>
+          <Link to="/privacy">الخصوصية</Link><span>•</span>
+          <Link to="/disclaimer">إخلاء المسؤولية</Link>
+        </p>
       </footer>
     </div>
   );
