@@ -1,4 +1,4 @@
-export type DrawStage = 'form' | 'drawing' | 'ad' | 'result';
+export type DrawStage = 'form' | 'drawing' | 'result';
 
 export interface AttemptState {
   stage: DrawStage;

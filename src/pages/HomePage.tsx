@@ -1,5 +1,4 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { AdSlot } from '../components/AdSlot';
 import { CompanyAutocomplete } from '../components/CompanyAutocomplete';
 import { LoadingDraw } from '../components/LoadingDraw';
 import { ResultCard } from '../components/ResultCard';
@@ -49,7 +48,7 @@ export function HomePage() {
     setStats(nextStats);
 
     setAttempt({ stage: 'drawing', won });
-    timeoutRef.current = window.setTimeout(() => setAttempt({ stage: 'ad', won }), DRAW_ANIMATION_MS);
+    timeoutRef.current = window.setTimeout(() => setAttempt({ stage: 'result', won }), DRAW_ANIMATION_MS);
   };
 
   const retry = () => {
@@ -105,7 +104,6 @@ export function HomePage() {
         </form>
       )}
       {attempt.stage === 'drawing' && <LoadingDraw />}
-      {attempt.stage === 'ad' && <AdSlot onReveal={() => setAttempt((current) => ({ ...current, stage: 'result' }))} />}
       {attempt.stage === 'result' && attempt.won !== null && <ResultCard won={attempt.won} firstName={firstName} level={level.label} company={company} stats={stats} onRetry={retry} />}
       <div className="inline-notice"><strong>تذكير</strong><p>النتيجة للترفيه فقط ولا تُعد تقديمًا للحج أو نتيجة رسمية.</p></div>
     </div>
