@@ -6,6 +6,7 @@ import { DRAW_ANIMATION_MS } from '../config';
 import { HAJJ_LEVELS, getHajjLevel, type HajjLevelId } from '../data/hajjLevels';
 import { INITIAL_ATTEMPT, resetAttempt, type AttemptState } from '../utils/attempt';
 import { getAttemptStats, recordAttempt, type AttemptStats } from '../utils/attemptStats';
+import { trackFunnelEvent } from '../utils/analytics';
 import { isWinningDraw, secureRandom } from '../utils/lottery';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,6 +40,8 @@ export function HomePage() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
+    trackFunnelEvent('simulator_started', { levelId, marketingOptIn });
+
     // The outcome is fixed here, before any advertisement/reward step is displayed.
     const won = isWinningDraw(levelId, secureRandom());
 
@@ -46,13 +49,22 @@ export function HomePage() {
     const nextStats = await recordAttempt(email, marketingOptIn, won);
     setSaving(false);
     setStats(nextStats);
+    trackFunnelEvent(nextStats.persistedRemotely ? 'attempt_persisted' : 'attempt_local_fallback', {
+      levelId,
+      marketingOptIn,
+      persistedRemotely: nextStats.persistedRemotely,
+    });
 
     setAttempt({ stage: 'drawing', won });
-    timeoutRef.current = window.setTimeout(() => setAttempt({ stage: 'result', won }), DRAW_ANIMATION_MS);
+    timeoutRef.current = window.setTimeout(() => {
+      setAttempt({ stage: 'result', won });
+      trackFunnelEvent('result_viewed', { levelId, marketingOptIn, persistedRemotely: nextStats.persistedRemotely });
+    }, DRAW_ANIMATION_MS);
   };
 
   const retry = () => {
     window.clearTimeout(timeoutRef.current);
+    trackFunnelEvent('retry_clicked', { levelId, marketingOptIn, persistedRemotely: stats?.persistedRemotely });
     setAttempt(resetAttempt());
     setErrors({});
   };
@@ -109,4 +121,3 @@ export function HomePage() {
     </div>
   );
 }
-
