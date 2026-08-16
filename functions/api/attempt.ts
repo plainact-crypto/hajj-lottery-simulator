@@ -1,5 +1,8 @@
 interface Env {
-  hajj_lottery_db: D1Database;
+  /** Preferred binding name used by the current deployment. */
+  hajj_lottery_db?: D1Database;
+  /** Backward-compatible binding name documented in earlier setup notes. */
+  DB?: D1Database;
 }
 
 interface Payload {
@@ -9,6 +12,14 @@ interface Payload {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function getDb(env: Env): D1Database | null {
+  return env.hajj_lottery_db || env.DB || null;
+}
+
+function databaseUnavailable() {
+  return Response.json({ error: 'database_unavailable' }, { status: 503 });
+}
 
 async function readStats(db: D1Database, email: string) {
   const current = await db.prepare(`
@@ -36,7 +47,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     return Response.json({ error: 'invalid_email' }, { status: 400 });
   }
 
-  return Response.json(await readStats(context.env.hajj_lottery_db, email));
+  const db = getDb(context.env);
+  if (!db) return databaseUnavailable();
+
+  return Response.json(await readStats(db, email));
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -51,10 +65,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return Response.json({ error: 'invalid_result' }, { status: 400 });
   }
 
+  const db = getDb(context.env);
+  if (!db) return databaseUnavailable();
+
   const won = body.won ? 1 : 0;
   const lost = body.won ? 0 : 1;
 
-  await context.env.hajj_lottery_db.prepare(`
+  await db.prepare(`
     INSERT INTO leads (
       email,
       attempt_count,
@@ -77,7 +94,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   `).bind(email, won, lost, body.marketingOptIn ? 1 : 0).run();
 
   return Response.json({
-    ...(await readStats(context.env.hajj_lottery_db, email)),
+    ...(await readStats(db, email)),
     persistedRemotely: true,
   });
 };
