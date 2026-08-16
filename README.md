@@ -53,6 +53,16 @@ For production-grade cross-device persistence and consented lead storage, deploy
 
 The optional marketing checkbox is separate from participation. Do not treat an email address as marketing consent unless the checkbox is enabled.
 
+### First-party funnel analytics
+
+The app includes privacy-minimized first-party funnel events for simulator usage. Production analytics require the same D1 binding plus `migrations/0002_funnel_events.sql`. Apply migrations in order:
+
+```bash
+wrangler d1 migrations apply <DATABASE_NAME> --remote
+```
+
+Do not treat funnel analytics as live merely because the client code is deployed. Verify the remote database contains the `funnel_events` table and receives real events before using the data for acquisition or monetization decisions. The event store intentionally excludes the user's name, email address and simulation draw number.
+
 ### Rewarded ad step
 
 `AdSlot.tsx` may contain development/demo rewarded-ad UI. Replace any mock with a Google-approved Rewarded/Offerwall implementation only after AdSense approval and policy review. Never require clicking an advertisement itself, and do not describe a simulated countdown as a real ad impression.
