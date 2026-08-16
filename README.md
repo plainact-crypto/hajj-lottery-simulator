@@ -37,23 +37,25 @@ npm run preview
 - Publish directory: `dist`
 - Node version: 20 أو أحدث
 
-ملف `public/_redirects` يتيح لمسارات React العمل على Netlify. على Cloudflare Pages، فعّل سلوك SPA fallback إن لم يُطبق تلقائيًا. لا يحتاج المشروع إلى متغيرات بيئة أو خادم أو قاعدة بيانات.
+ملف `public/_redirects` يتيح لمسارات React العمل على Netlify. على Cloudflare Pages، فعّل سلوك SPA fallback إن لم يُطبق تلقائيًا. لا يحتاج العرض الثابت إلى قاعدة بيانات، لكن حفظ سجل المحاولات مركزيًا وتجميع الموافقات التسويقية يحتاجان Cloudflare Pages Functions + D1 كما هو موضح أدناه.
 
-يتضمن المشروع manifest وservice worker وأيقونة ليعمل كتطبيق ويب قابل للتثبيت. عند تفعيل AdSense مستقبلًا، استبدل محتوى `AdSlot.tsx` بمعرّف الناشر الحقيقي وحدّث سياسة الخصوصية؛ لا تجعل مشاهدة النتيجة مرتبطة بالنقر على الإعلان.
+يتضمن المشروع manifest وservice worker وأيقونة ليعمل كتطبيق ويب قابل للتثبيت. عند تفعيل AdSense مستقبلًا، استبدل محتوى `AdSlot.tsx` بتطبيق معتمد وحدّث سياسة الخصوصية؛ لا تجعل مشاهدة النتيجة مرتبطة بالنقر على الإعلان.
 
-## 2026 content and attempt-limit update
+## 2026 content and attempt tracking
 
-The simulator now uses the published 1447/2026 Egypt Tourism Hajj allocation buckets and labels the computed figures as gross seat-to-applicant ratios rather than guaranteed individual odds.
+The simulator uses the published 1447/2026 Egypt Tourism Hajj allocation buckets and labels the computed figures as gross seat-to-applicant ratios rather than guaranteed individual odds. Seasonal administrative facts must be re-verified from authoritative sources before reuse in a future season.
 
-### Email and 3-attempt limit
+### Email and attempt history
 
-The form requires an email and allows up to 3 attempts per normalized email. During local development or on a static host without the API, enforcement falls back to browser `localStorage`. For production-grade enforcement and lead storage, deploy on Cloudflare Pages with the included `functions/api/attempt.ts`, create a D1 database, run `migrations/0001_init.sql`, and bind the database as `DB`.
+The current product allows open simulation attempts and records aggregate attempts/wins/losses per normalized email. During local development or on a static host without the API, persistence falls back to browser `localStorage`.
+
+For production-grade cross-device persistence and consented lead storage, deploy on Cloudflare Pages with the included `functions/api/attempt.ts`, create a D1 database, run `migrations/0001_init.sql`, and bind the database as `hajj_lottery_db` (preferred). The function also accepts the legacy binding name `DB` for backward compatibility.
 
 The optional marketing checkbox is separate from participation. Do not treat an email address as marketing consent unless the checkbox is enabled.
 
 ### Rewarded ad step
 
-`AdSlot.tsx` now simulates a rewarded-ad viewing step with a short development countdown. Replace this development mock with a Google-approved Rewarded/Offerwall implementation after AdSense approval. Never require clicking the advertisement itself.
+`AdSlot.tsx` may contain development/demo rewarded-ad UI. Replace any mock with a Google-approved Rewarded/Offerwall implementation only after AdSense approval and policy review. Never require clicking an advertisement itself, and do not describe a simulated countdown as a real ad impression.
 
 ### Editorial pages
 
