@@ -4,6 +4,7 @@ import { Disclaimer } from './Disclaimer';
 
 const links = [
   ['/', 'المحاكي'],
+  ['/umrah-1448-checker', 'فاحص العمرة 1448'],
   ['/how-it-works', 'كيف تعمل المحاكاة'],
   ['/hajj-levels', 'مستويات الحج'],
   ['/rituals', 'مناسك الحج'],
@@ -22,7 +23,7 @@ export function Layout() {
       <header className="site-header">
         <div className="nav-inner">
           <Link to="/" className="brand" aria-label="الصفحة الرئيسية">
-            <span className="brand-mark" aria-hidden="true">â—ˆ</span>
+            <span className="brand-mark" aria-hidden="true">◈</span>
             <span>محاكي قرعة الحج</span>
           </Link>
           <button className="menu-button" type="button" aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
@@ -30,9 +31,8 @@ export function Layout() {
           </button>
           <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="التنقل الرئيسي">
             {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'}>{label}</NavLink>)}
-          <a href="/trips" style={{display:'inline-flex',alignItems:'center',gap:'6px',fontWeight:700,textDecoration:'none'}} aria-label="رحلات">
-  <span aria-hidden="true">✈️</span><span>رحلات</span>
-</a></nav>
+            <a href="/trips" style={{display:'inline-flex',alignItems:'center',gap:'6px',fontWeight:700,textDecoration:'none'}} aria-label="رحلات"><span aria-hidden="true">✈️</span><span>رحلات</span></a>
+          </nav>
         </div>
       </header>
       <main><Outlet /></main>
@@ -40,6 +40,7 @@ export function Layout() {
         <Disclaimer />
         <p>محاكي قرعة الحج — مشروع مستقل غير رسمي</p>
         <p className="footer-links">
+          <Link to="/umrah-1448-checker">فاحص العمرة 1448</Link><span>•</span>
           <Link to="/how-it-works">كيف تعمل المحاكاة</Link><span>•</span>
           <Link to="/hajj-levels">مستويات الحج</Link><span>•</span>
           <Link to="/rituals">المناسك</Link><span>•</span>
@@ -53,4 +54,3 @@ export function Layout() {
     </div>
   );
 }
-
