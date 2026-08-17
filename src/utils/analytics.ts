@@ -3,7 +3,10 @@ export type FunnelEventName =
   | 'attempt_persisted'
   | 'attempt_local_fallback'
   | 'result_viewed'
-  | 'retry_clicked';
+  | 'retry_clicked'
+  | 'umrah_checker_started'
+  | 'umrah_checker_completed'
+  | 'official_source_clicked';
 
 const SESSION_KEY = 'hajj-sim-session-v1';
 
@@ -34,7 +37,7 @@ export function trackFunnelEvent(
     ...data,
   });
 
-  // Measurement must never block the simulator or expose the user's email/name.
+  // Measurement must never block the product or expose the user's email/name/program details.
   fetch('/api/event', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
