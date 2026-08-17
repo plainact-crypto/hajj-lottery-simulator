@@ -18,6 +18,9 @@ const ALLOWED_EVENTS = new Set([
   'attempt_local_fallback',
   'result_viewed',
   'retry_clicked',
+  'umrah_checker_started',
+  'umrah_checker_completed',
+  'official_source_clicked',
 ]);
 
 function getDb(env: Env): D1Database | null {
