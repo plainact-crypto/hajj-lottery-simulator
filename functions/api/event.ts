@@ -24,6 +24,26 @@ function getDb(env: Env): D1Database | null {
   return env.hajj_lottery_db || env.DB || null;
 }
 
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  const db = getDb(context.env);
+  if (!db) {
+    return Response.json(
+      { ok: false, databaseConfigured: false, funnelTableReady: false },
+      { status: 503 },
+    );
+  }
+
+  try {
+    await db.prepare('SELECT 1 FROM funnel_events LIMIT 1').first();
+    return Response.json({ ok: true, databaseConfigured: true, funnelTableReady: true });
+  } catch {
+    return Response.json(
+      { ok: false, databaseConfigured: true, funnelTableReady: false },
+      { status: 503 },
+    );
+  }
+};
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const body = await context.request.json<EventPayload>().catch(() => ({}));
   const eventName = String(body.eventName || '');
