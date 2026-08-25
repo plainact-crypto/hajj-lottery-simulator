@@ -1,6 +1,6 @@
 ﻿import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { ArticlesSourcesPage, HajjLevelsPage, HajjSystemsWorldPage, HowItWorksPage, NotFoundPage, RitualsPage } from './pages/ContentPages';
+import { ArticlesSourcesPage, HajjLevelsPage, HajjSystemsWorldPage, HowItWorksPage, RitualsPage } from './pages/ContentPages';
 import { ArticlePage, GuidesPage } from './pages/Articles';
 import { HomePage } from './pages/HomePage';
 import { HajjDataPage } from './pages/HajjDataPage';
@@ -18,6 +18,7 @@ import {
   UmrahHubPage,
   UmrahVisaPage,
 } from './pages/EvergreenContentPages';
+import { ScaleContentPage } from './pages/ScaleContentPage';
 import {
   AuthorsPage,
   ContactPage,
@@ -84,7 +85,7 @@ export default function App() {
       <Route path="umrah-1448-checker" element={<UmrahProgramCheckerPage />} />
       <Route path="privacy" element={<TrustPrivacyPage />} />
       <Route path="disclaimer" element={<TrustDisclaimerPage />} />
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<ScaleContentPage />} />
     </Route>
     <Route path="/trips" element={<TripsPage />} />
   </Routes>;
