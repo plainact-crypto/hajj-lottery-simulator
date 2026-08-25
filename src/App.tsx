@@ -16,11 +16,29 @@ import {
   TrustDisclaimerPage,
   TrustPrivacyPage,
 } from './pages/TrustPages';
+import {
+  AssociationsHajj2027Page,
+  CompareHajjPaths2027Page,
+  EgyptHajj2027Page,
+  HajjLottery2027Page,
+  HajjLotteryApply2027Page,
+  HajjLotteryRequirements2027Page,
+  TouristHajj2027Page,
+  UnifiedHajjPortalPage,
+} from './pages/Seasonal2027Pages';
 
 export default function App() {
   return <Routes>
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
+      <Route path="egypt-hajj/2027" element={<EgyptHajj2027Page />} />
+      <Route path="hajj-lottery/2027" element={<HajjLottery2027Page />} />
+      <Route path="hajj-lottery/2027/requirements" element={<HajjLotteryRequirements2027Page />} />
+      <Route path="hajj-lottery/2027/apply" element={<HajjLotteryApply2027Page />} />
+      <Route path="egypt-hajj/2027/associations" element={<AssociationsHajj2027Page />} />
+      <Route path="egypt-hajj/2027/compare-paths" element={<CompareHajjPaths2027Page />} />
+      <Route path="tourist-hajj/2027" element={<TouristHajj2027Page />} />
+      <Route path="egypt-hajj/unified-hajj-portal" element={<UnifiedHajjPortalPage />} />
       <Route path="about" element={<TrustAboutPage />} />
       <Route path="contact" element={<ContactPage />} />
       <Route path="editorial-policy" element={<EditorialPolicyPage />} />
