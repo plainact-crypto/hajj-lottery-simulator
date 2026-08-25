@@ -4,7 +4,7 @@ import { CompanyAutocomplete } from '../components/CompanyAutocomplete';
 import { LoadingDraw } from '../components/LoadingDraw';
 import { ResultCard } from '../components/ResultCard';
 import { DRAW_ANIMATION_MS } from '../config';
-import { HAJJ_LEVELS, getHajjLevel, type HajjLevelId } from '../data/hajjLevels';
+import { HAJJ_DATASET, HAJJ_LEVELS, getHajjLevel, historicalSelectionRate, type HajjLevelId } from '../data/hajjLevels';
 import { INITIAL_ATTEMPT, resetAttempt, type AttemptState } from '../utils/attempt';
 import { getAttemptStats, recordAttempt, type AttemptStats } from '../utils/attemptStats';
 import { trackFunnelEvent } from '../utils/analytics';
@@ -70,6 +70,9 @@ export function HomePage() {
 
   const firstName = name.trim().split(/\s+/)[0] || 'ضيفنا';
   const level = getHajjLevel(levelId);
+  const selectedRate = historicalSelectionRate(level);
+  const rateLabel = new Intl.NumberFormat('ar-EG', { style: 'percent', maximumFractionDigits: 2 }).format(selectedRate);
+  const seasonLabel = `${HAJJ_DATASET.seasonHijri} / ${HAJJ_DATASET.seasonGregorian}`;
 
   return (
     <div className="home-page page-container">
@@ -82,20 +85,42 @@ export function HomePage() {
         <div className="hero-emblem" aria-hidden="true"><span>🕋</span></div>
         <span className="unofficial-badge">محاكاة غير رسمية</span>
         <h1>محاكي قرعة الحج ودليل معلومات الحج</h1>
-        <p>محاكاة تعليمية مبنية على بيانات الحج السياحي المصرية 1447هـ / 2026م، مع أدلة تشرح طرق التقديم والاحتمالات والمصادر الرسمية.</p>
+        <p>محاكاة تعليمية مبنية على بيانات منشورة للحج السياحي المصري لموسم {seasonLabel}، مع توثيق مصدر الأرقام وحدود استخدامها.</p>
       </section>
 
       <article className="card prose">
         <h2>ابدأ بالمعلومة الصحيحة قبل المحاكاة</h2>
-        <p>هذا الموقع ليس جهة تسجيل ولا يعرض نتيجة حكومية. هدفه أن يساعدك على فهم معنى القرعة، والفرق بين مسارات الحج في مصر، وكيف تقرأ الأرقام المنشورة قبل تجربة المحاكاة الترفيهية.</p>
+        <p>هذا الموقع ليس جهة تسجيل ولا يعرض نتيجة حكومية. هدفه أن يساعدك على فهم معنى القرعة، والفرق بين مسارات الحج في مصر، وكيف تقرأ الأرقام المنشورة قبل تجربة المحاكاة.</p>
         <p>إذا كنت تبحث عن تسجيل أو نتيجة حقيقية، استخدم الجهة الرسمية التي تتبع لها. وإذا كنت تريد فهم الفكرة أولًا، ابدأ من <Link to="/guides">الأدلة والمقالات</Link> أو <Link to="/how-it-works">شرح طريقة عمل المحاكاة</Link>.</p>
       </article>
+
+      <section className="simulator-evidence card" aria-labelledby="dataset-heading">
+        <div className="simulator-evidence-head">
+          <div>
+            <span className="evidence-kicker">بيانات المحاكاة</span>
+            <h2 id="dataset-heading">النسبة المستخدمة واضحة قبل أي محاولة</h2>
+          </div>
+          <span className="dataset-season">{seasonLabel}</span>
+        </div>
+        <div className="dataset-metrics">
+          <div><span>الفئة المختارة</span><strong>{level.label}</strong></div>
+          <div><span>المتقدمون</span><strong>{new Intl.NumberFormat('ar-EG').format(level.applicants)}</strong></div>
+          <div><span>الأماكن المخصصة</span><strong>{new Intl.NumberFormat('ar-EG').format(level.availablePlaces)}</strong></div>
+          <div><span>نسبة المقاعد التاريخية</span><strong>{rateLabel}</strong></div>
+        </div>
+        <p className="dataset-explanation">المعادلة المستخدمة في المحاكاة هي: <strong>الأماكن المخصصة ÷ عدد المتقدمين</strong>. هذه نسبة تاريخية إجمالية للموسم المرجعي وليست احتمالًا شخصيًا لك ولا توقعًا لنتيجة موسم قادم.</p>
+        <div className="dataset-source-row">
+          <span>آخر تحقق: {HAJJ_DATASET.lastVerified}</span>
+          <a href={HAJJ_DATASET.sourceUrl} target="_blank" rel="noreferrer">المصدر الرسمي: وزارة السياحة والآثار ↗</a>
+          <Link to="/how-it-works">اقرأ المنهجية والقيود كاملة ←</Link>
+        </div>
+      </section>
 
       {attempt.stage === 'form' && (
         <form className="simulator-form card" onSubmit={startDraw} noValidate>
           <div className="form-heading">
             <span aria-hidden="true">✧</span>
-            <div><h2>جرّب المحاكاة</h2><p>المحاولات مفتوحة، ويُسجَّل لك إجمالي الفوز والخسارة.</p></div>
+            <div><h2>جرّب المحاكاة</h2><p>كل محاولة عشوائية مستقلة وتستخدم النسبة التاريخية الموضحة أعلاه.</p></div>
           </div>
           <div className="field">
             <label htmlFor="full-name">الاسم الكامل</label>
@@ -110,26 +135,28 @@ export function HomePage() {
           <div className="field">
             <label htmlFor="hajj-level">مستوى الحج</label>
             <div className="input-wrap select-wrap"><span aria-hidden="true">◇</span><select id="hajj-level" value={levelId} onChange={(event) => setLevelId(event.target.value as HajjLevelId)}>{HAJJ_LEVELS.map((item) => <option value={item.id} key={item.id}>{item.label}</option>)}</select></div>
+            <small>يتغير عدد المتقدمين والأماكن والنسبة التاريخية أعلى النموذج مباشرة عند تغيير المستوى.</small>
           </div>
           <CompanyAutocomplete value={company} onChange={setCompany} error={errors.company} />
+          <p className="field-neutral-note">اسم الشركة جزء من سيناريو العرض فقط ولا يدخل في حساب النتيجة.</p>
           <label className="consent-row">
             <input type="checkbox" checked={marketingOptIn} onChange={(event) => setMarketingOptIn(event.target.checked)} />
             <span>أوافق على استلام أخبار وتحديثات الحج من الموقع (اختياري).</span>
           </label>
-          <button className="button button-primary draw-button" type="submit" disabled={saving}>{saving ? 'جارٍ تسجيل المحاولة...' : '🕋 دخول القرعة'}</button>
-          <p className="privacy-note">🔒 يُستخدم البريد لحفظ سجل محاولاتك وإجمالي الفوز والخسارة. الاشتراك في الرسائل اختياري ومنفصل عن دخول المحاكاة.</p>
+          <button className="button button-primary draw-button" type="submit" disabled={saving}>{saving ? 'جارٍ تسجيل المحاولة...' : 'تشغيل المحاكاة'}</button>
+          <p className="privacy-note">🔒 يُستخدم البريد لحفظ سجل محاولاتك وإجمالي الفوز والخسارة. الاشتراك في الرسائل اختياري ومنفصل عن تشغيل المحاكاة.</p>
         </form>
       )}
       {attempt.stage === 'drawing' && <LoadingDraw />}
-      {attempt.stage === 'result' && attempt.won !== null && <ResultCard won={attempt.won} firstName={firstName} level={level.label} company={company} stats={stats} onRetry={retry} />}
-      <div className="inline-notice"><strong>تذكير</strong><p>النتيجة للترفيه فقط ولا تُعد تقديمًا للحج أو نتيجة رسمية.</p></div>
+      {attempt.stage === 'result' && attempt.won !== null && <ResultCard won={attempt.won} firstName={firstName} level={level.label} company={company} historicalRate={rateLabel} seasonLabel={seasonLabel} stats={stats} onRetry={retry} />}
+      <div className="inline-notice"><strong>تذكير</strong><p>النتيجة للترفيه والتعليم فقط، ولا تُعد تقديمًا للحج أو نتيجة رسمية أو تقديرًا لفرصك الفردية.</p></div>
 
       <article className="card prose">
         <h2>ماذا ستجد في الموقع؟</h2>
         <h3>فهم طرق الحج في مصر</h3>
         <p>الحج السياحي وحج القرعة وحج الجمعيات الأهلية مسارات تنظيمية مختلفة. لكل مسار جهة وقواعد ومواعيد خاصة به، ولا ينبغي استخدام معلومات أحدها باعتبارها تعليمات للآخر.</p>
         <h3>قراءة النسب دون تضليل</h3>
-        <p>نسبة المقاعد إلى المتقدمين مفيدة لفهم شدة المنافسة، لكنها لا تضمن نتيجة فردية. المحاكي يوضح هذا الفرق ويشرح الافتراضات المستخدمة في الحساب.</p>
+        <p>نسبة المقاعد إلى المتقدمين مفيدة لفهم شدة المنافسة في موسم تاريخي، لكنها لا تضمن نتيجة فردية ولا يجب تحويلها إلى وعد للموسم القادم.</p>
         <h3>الوصول إلى المصادر الأصلية</h3>
         <p>الصفحات التعليمية تربط بالمصادر الرسمية ذات الصلة حتى تتمكن من التحقق من التعليمات الموسمية بدل الاعتماد على منشور قديم أو رسالة متداولة.</p>
       </article>
