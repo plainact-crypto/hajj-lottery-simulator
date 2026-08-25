@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/main.css';
 import './styles/polish.css';
+import './styles/glass.css';
 
 const rootElement = document.getElementById('root')!;
 const app = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>;
