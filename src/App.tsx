@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage';
 import { HajjDataPage } from './pages/HajjDataPage';
 import TripsPage from './pages/TripsPage';
 import UmrahProgramCheckerPage from './pages/UmrahProgramCheckerPage';
+import { BudgetCalculatorPage, EligibilityCheckerPage, PackingChecklistPage, ProgramComparisonPage, ToolsHubPage } from './pages/InteractiveToolsPages';
 import {
   AuthorsPage,
   ContactPage,
@@ -32,6 +33,11 @@ export default function App() {
   return <Routes>
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
+      <Route path="tools" element={<ToolsHubPage />} />
+      <Route path="tools/hajj-packing-checklist" element={<PackingChecklistPage />} />
+      <Route path="tools/hajj-budget-calculator" element={<BudgetCalculatorPage />} />
+      <Route path="tools/egypt-hajj-eligibility-checker" element={<EligibilityCheckerPage />} />
+      <Route path="tools/hajj-program-comparison" element={<ProgramComparisonPage />} />
       <Route path="data/hajj-tourism-history" element={<HajjDataPage />} />
       <Route path="egypt-hajj/2027" element={<EgyptHajj2027Page />} />
       <Route path="hajj-lottery/2027" element={<HajjLottery2027Page />} />
