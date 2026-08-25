@@ -1,6 +1,6 @@
 ﻿import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { ArticlesSourcesPage, HajjLevelsPage, HajjSystemsWorldPage, HowItWorksPage, RitualsPage } from './pages/ContentPages';
+import { ArticlesSourcesPage, HajjSystemsWorldPage } from './pages/ContentPages';
 import { ArticlePage, GuidesPage } from './pages/Articles';
 import { HomePage } from './pages/HomePage';
 import { HajjDataPage } from './pages/HajjDataPage';
@@ -75,18 +75,18 @@ export default function App() {
       <Route path="corrections-policy" element={<CorrectionsPolicyPage />} />
       <Route path="authors" element={<AuthorsPage />} />
       <Route path="official-sources" element={<OfficialSourcesPage />} />
-      <Route path="how-it-works" element={<HowItWorksPage />} />
-      <Route path="hajj-levels" element={<HajjLevelsPage />} />
-      <Route path="rituals" element={<RitualsPage />} />
+      <Route path="how-it-works" element={<ScaleContentPage overridePath="/hajj-lottery/how-it-works" />} />
+      <Route path="hajj-levels" element={<ScaleContentPage overridePath="/tourist-hajj/levels" />} />
+      <Route path="rituals" element={<HajjRitualsHubPage />} />
       <Route path="hajj-systems-world" element={<HajjSystemsWorldPage />} />
       <Route path="articles-sources" element={<ArticlesSourcesPage />} />
       <Route path="guides" element={<GuidesPage />} />
       <Route path="guides/:slug" element={<ArticlePage />} />
       <Route path="umrah-1448-checker" element={<UmrahProgramCheckerPage />} />
+      <Route path="trips" element={<TripsPage />} />
       <Route path="privacy" element={<TrustPrivacyPage />} />
       <Route path="disclaimer" element={<TrustDisclaimerPage />} />
       <Route path="*" element={<ScaleContentPage />} />
     </Route>
-    <Route path="/trips" element={<TripsPage />} />
   </Routes>;
 }
