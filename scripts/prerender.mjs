@@ -6,6 +6,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 const SSR_DIST = path.join(ROOT, '.ssr-dist');
 const SITE_URL = 'https://hajj-lottery-simulator.pages.dev';
+const NOINDEX_ROUTES = new Set(['/trips']);
 
 const baseSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seoRoutes.json'), 'utf8'));
 const seasonalSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seasonalSeoRoutes.json'), 'utf8'));
@@ -32,7 +33,8 @@ const template = await fs.readFile(path.join(DIST, 'index.html'), 'utf8');
 function escapeHtml(value) { return String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
 function replaceOrInsert(html, regex, replacement, before = '</head>') { if (regex.test(html)) return html.replace(regex, replacement); return html.replace(before, `  ${replacement}\n${before}`); }
 function withSeo(html, route) {
-  const meta = seoRoutes[route] || seoRoutes['/'];
+  const original = seoRoutes[route] || seoRoutes['/'];
+  const meta = NOINDEX_ROUTES.has(route) ? { ...original, index: false } : original;
   const canonical = `${SITE_URL}${route === '/' ? '/' : route}`;
   let out = html;
   out = replaceOrInsert(out, /<title>.*?<\/title>/s, `<title>${escapeHtml(meta.title)}</title>`);
@@ -54,9 +56,9 @@ for (const route of routes) {
   await fs.writeFile(outputFile, html, 'utf8');
 }
 
-const sitemapRoutes = routes.filter((route) => route !== '/trips' || seoRoutes['/trips']);
+const sitemapRoutes = routes.filter((route) => !NOINDEX_ROUTES.has(route) && seoRoutes[route]?.index !== false);
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapRoutes.map((route) => `  <url><loc>${SITE_URL}${route === '/' ? '/' : route}</loc></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml, 'utf8');
 
 await fs.rm(SSR_DIST, { recursive: true, force: true });
-console.log(`Prerendered ${routes.length} routes with route-specific metadata and generated sitemap.`);
+console.log(`Prerendered ${routes.length} routes; sitemap contains ${sitemapRoutes.length} indexable routes.`);
