@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Disclaimer } from './Disclaimer';
+import { RouteSeo } from './RouteSeo';
 
 const links = [
   ['/', 'المحاكي'],
@@ -21,6 +22,7 @@ export function Layout() {
 
   return (
     <div className="app-shell">
+      <RouteSeo />
       <header className="site-header">
         <div className="nav-inner">
           <Link to="/" className="brand" aria-label="الصفحة الرئيسية">
