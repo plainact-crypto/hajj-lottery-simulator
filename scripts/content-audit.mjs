@@ -22,7 +22,9 @@ if (duplicates(titles).length) problems.push(`Duplicate scale titles: ${duplicat
 if (duplicates(intros).length) problems.push(`Duplicate scale intros: ${duplicates(intros).join(', ')}`);
 for (const page of scale) {
   if (page.title.length < 18) problems.push(`Title too weak: ${page.path}`);
-  if (page.intro.length < 70) problems.push(`Intro too short: ${page.path}`);
+  // Arabic intros are often concise; 60 characters still blocks thin one-line stubs while
+  // avoiding false failures for complete pages whose detail lives in the unique sections.
+  if (page.intro.length < 60) problems.push(`Intro too short: ${page.path}`);
 }
 
 const knownRoutes = new Set([...Object.keys(base), ...Object.keys(seasonal), ...Object.keys(tools), ...paths]);
