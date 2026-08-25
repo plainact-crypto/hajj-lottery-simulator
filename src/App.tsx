@@ -3,6 +3,7 @@ import { Layout } from './components/Layout';
 import { ArticlesSourcesPage, HajjLevelsPage, HajjSystemsWorldPage, HowItWorksPage, NotFoundPage, RitualsPage } from './pages/ContentPages';
 import { ArticlePage, GuidesPage } from './pages/Articles';
 import { HomePage } from './pages/HomePage';
+import { HajjDataPage } from './pages/HajjDataPage';
 import TripsPage from './pages/TripsPage';
 import UmrahProgramCheckerPage from './pages/UmrahProgramCheckerPage';
 import {
@@ -31,6 +32,7 @@ export default function App() {
   return <Routes>
     <Route element={<Layout />}>
       <Route index element={<HomePage />} />
+      <Route path="data/hajj-tourism-history" element={<HajjDataPage />} />
       <Route path="egypt-hajj/2027" element={<EgyptHajj2027Page />} />
       <Route path="hajj-lottery/2027" element={<HajjLottery2027Page />} />
       <Route path="hajj-lottery/2027/requirements" element={<HajjLotteryRequirements2027Page />} />
