@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://hajj-lottery-simulator.pages.dev/</loc></url>
+  <url><loc>https://hajj-lottery-simulator.pages.dev/tools</loc></url>
+  <url><loc>https://hajj-lottery-simulator.pages.dev/tools/hajj-packing-checklist</loc></url>
+  <url><loc>https://hajj-lottery-simulator.pages.dev/tools/hajj-budget-calculator</loc></url>
+  <url><loc>https://hajj-lottery-simulator.pages.dev/tools/egypt-hajj-eligibility-checker</loc></url>
+  <url><loc>https://hajj-lottery-simulator.pages.dev/tools/hajj-program-comparison</loc></url>
   <url><loc>https://hajj-lottery-simulator.pages.dev/data/hajj-tourism-history</loc></url>
   <url><loc>https://hajj-lottery-simulator.pages.dev/egypt-hajj/2027</loc></url>
   <url><loc>https://hajj-lottery-simulator.pages.dev/hajj-lottery/2027</loc></url>
