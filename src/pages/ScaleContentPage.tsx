@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { SCALE_CONTENT_MAP } from '../content/scaleContent';
+import { SCALE_CONTENT, SCALE_CONTENT_MAP } from '../content/scaleContent';
 import { NotFoundPage } from './ContentPages';
 
 const clusterLabels = {
@@ -11,6 +11,7 @@ export function ScaleContentPage() {
   const clean = pathname.replace(/\/$/, '') || '/';
   const page = SCALE_CONTENT_MAP[clean];
   if (!page) return <NotFoundPage />;
+  const siblings = SCALE_CONTENT.filter((item) => item.cluster === page.cluster && item.path !== page.path).slice(0, 6);
 
   return <div className="page-container content-page scale-page">
     <section className="hero scale-hero">
@@ -40,6 +41,8 @@ export function ScaleContentPage() {
       <span>{clusterLabels[page.cluster]}</span>
       <strong>خطوتك التالية</strong>
       <div>{page.related.map((to) => <Link to={to} key={to}>{to.includes('/tools/') ? 'استخدم الأداة المرتبطة' : 'اقرأ الدليل المرتبط'} ←</Link>)}</div>
+      <strong>داخل نفس الدليل</strong>
+      <div>{siblings.map((item) => <Link to={item.path} key={item.path}>{item.title}</Link>)}</div>
     </aside>
   </div>;
 }
