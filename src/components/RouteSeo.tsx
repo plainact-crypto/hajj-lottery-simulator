@@ -3,9 +3,15 @@ import { useLocation } from 'react-router-dom';
 import baseSeoRoutes from '../seoRoutes.json';
 import seasonalSeoRoutes from '../seasonalSeoRoutes.json';
 import toolSeoRoutes from '../toolSeoRoutes.json';
+import { SCALE_CONTENT } from '../content/scaleContent';
 
 const SITE_URL = 'https://hajj-lottery-simulator.pages.dev';
-const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes, ...toolSeoRoutes };
+const scaleSeoRoutes = Object.fromEntries(SCALE_CONTENT.map((page) => [page.path, {
+  title: `${page.title} | محاكي قرعة الحج`,
+  description: page.intro,
+  index: true,
+}]));
+const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes, ...toolSeoRoutes, ...scaleSeoRoutes };
 const DEFAULT = seoRoutes['/' as keyof typeof seoRoutes];
 
 function setMeta(selector: string, attr: string, value: string) {
