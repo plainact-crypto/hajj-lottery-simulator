@@ -1,0 +1,275 @@
+/* Phase 5 — cool glass design system
+   Applied after main.css and polish.css so the whole product shares one visual language. */
+:root {
+  --glass-bg: rgba(255,255,255,.56);
+  --glass-bg-strong: rgba(255,255,255,.72);
+  --glass-bg-soft: rgba(244,249,248,.48);
+  --glass-line: rgba(255,255,255,.72);
+  --glass-line-green: rgba(15,91,69,.14);
+  --glass-shadow: 0 18px 55px rgba(19,55,48,.10), inset 0 1px 0 rgba(255,255,255,.78);
+  --glass-shadow-hover: 0 24px 70px rgba(19,55,48,.15), inset 0 1px 0 rgba(255,255,255,.88);
+  --glass-emerald: #0b6b52;
+  --glass-emerald-dark: #084b3b;
+  --glass-ink: #15342d;
+  --glass-muted: #61756f;
+  --glass-silver: #e8efed;
+  --glass-pearl: #f6faf9;
+  --glass-gold: #b99a5b;
+  --cream: #f4f8f7;
+  --green: var(--glass-emerald-dark);
+  --green-2: #063c30;
+  --gold: var(--glass-gold);
+  --muted: var(--glass-muted);
+  --border: rgba(15,91,69,.12);
+  color: var(--glass-ink);
+  background: #edf4f2;
+}
+
+html { background: #edf4f2; }
+body {
+  color: var(--glass-ink);
+  background:
+    radial-gradient(circle at 10% 5%, rgba(255,255,255,.98), transparent 27rem),
+    radial-gradient(circle at 90% 4%, rgba(102,187,166,.16), transparent 29rem),
+    radial-gradient(circle at 80% 68%, rgba(177,205,199,.20), transparent 36rem),
+    linear-gradient(155deg,#eef5f4 0%,#f8fbfb 43%,#e7f0ee 100%);
+  background-attachment: fixed;
+}
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(10px);
+  pointer-events: none;
+}
+body::before {
+  width: 25rem;
+  height: 25rem;
+  left: -8rem;
+  top: 22vh;
+  background: rgba(121,190,174,.12);
+}
+body::after {
+  width: 30rem;
+  height: 30rem;
+  right: -12rem;
+  bottom: -7rem;
+  background: rgba(175,198,194,.16);
+}
+
+.site-header {
+  background: rgba(242,248,247,.58);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  border-bottom: 1px solid rgba(255,255,255,.74);
+  box-shadow: 0 8px 34px rgba(24,68,57,.055), inset 0 -1px 0 rgba(15,91,69,.06);
+}
+.nav-inner { min-height: 74px; }
+.brand { color: var(--glass-emerald-dark); }
+.brand-mark {
+  color: rgba(255,255,255,.98);
+  background: linear-gradient(145deg,rgba(14,111,83,.94),rgba(6,70,55,.96));
+  border: 1px solid rgba(255,255,255,.54);
+  box-shadow: 0 10px 24px rgba(9,78,60,.20), inset 0 1px 0 rgba(255,255,255,.34);
+}
+.menu-button {
+  background: rgba(255,255,255,.48);
+  border: 1px solid rgba(255,255,255,.72);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 7px 18px rgba(24,68,57,.06);
+  backdrop-filter: blur(14px);
+}
+.nav-links a { color: #34534b; }
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--glass-emerald-dark);
+  background: rgba(255,255,255,.48);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.68), 0 7px 20px rgba(24,68,57,.05);
+}
+
+.hero { position: relative; }
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: min(76vw,520px);
+  height: min(76vw,520px);
+  top: -155px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(255,255,255,.82) 0%,rgba(117,185,168,.10) 44%,transparent 70%);
+  filter: blur(2px);
+}
+.hero-emblem {
+  background: linear-gradient(145deg,rgba(255,255,255,.66),rgba(224,237,234,.44));
+  border: 1px solid rgba(255,255,255,.82);
+  box-shadow: 0 16px 45px rgba(24,68,57,.10), inset 0 1px 0 rgba(255,255,255,.96), inset 0 0 30px rgba(255,255,255,.45);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+.hero h1 { color: #0a4d3d; text-shadow: 0 1px 0 rgba(255,255,255,.72); }
+.hero p { color: #597069; }
+.unofficial-badge,
+.result-label,
+.page-title > span {
+  color: #42625a;
+  background: rgba(255,255,255,.46);
+  border: 1px solid rgba(255,255,255,.76);
+  box-shadow: 0 8px 22px rgba(24,68,57,.06), inset 0 1px 0 rgba(255,255,255,.88);
+  backdrop-filter: blur(12px);
+}
+
+.card,
+.prose,
+.level-card,
+.source-box,
+.important-note,
+.formula-box,
+.inline-notice,
+.disclaimer,
+.result-details,
+.suggestions,
+.dua-list blockquote {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-line) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+.card,
+.prose { border-radius: 26px; }
+.card:hover,
+.level-card:hover { box-shadow: var(--glass-shadow-hover) !important; }
+
+.prose::before {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at top right,rgba(109,185,166,.15),transparent 68%);
+}
+.prose h2,
+.prose h3,
+.home-page h2,
+.home-page h3,
+.page-title h1 { color: #0a5542; }
+.prose h2::after { background: linear-gradient(90deg,rgba(10,104,80,.54),transparent); }
+.prose a,
+a { color: #08634d; }
+.prose blockquote,
+.dua-list blockquote {
+  border-right: 2px solid rgba(10,104,80,.34) !important;
+  color: #284941;
+}
+
+.simulator-form {
+  background: linear-gradient(145deg,rgba(255,255,255,.63),rgba(240,247,245,.46)) !important;
+}
+.simulator-form::before {
+  height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.95),rgba(10,104,80,.42),rgba(255,255,255,.95),transparent);
+}
+.form-heading { border-bottom-color: rgba(15,91,69,.09); }
+.form-heading > span {
+  background: linear-gradient(145deg,#147d60,#07513f);
+  color: rgba(255,255,255,.92);
+  box-shadow: 0 12px 28px rgba(8,91,68,.20), inset 0 1px 0 rgba(255,255,255,.28);
+}
+.input-wrap {
+  background: rgba(255,255,255,.48);
+  border: 1px solid rgba(255,255,255,.82);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 8px 22px rgba(24,68,57,.045);
+  backdrop-filter: blur(12px);
+}
+.input-wrap:hover { border-color: rgba(15,91,69,.18); }
+.input-wrap:focus-within {
+  border-color: rgba(8,107,82,.42);
+  box-shadow: 0 0 0 4px rgba(22,128,98,.08), inset 0 1px 0 rgba(255,255,255,.92);
+}
+.input-wrap > span { color: #608179; }
+.button-primary {
+  background: linear-gradient(135deg,#11775b 0%,#07503e 100%);
+  box-shadow: 0 13px 30px rgba(7,86,64,.22), inset 0 1px 0 rgba(255,255,255,.20);
+}
+.button-support {
+  color: #31564c;
+  background: rgba(255,255,255,.46);
+  border: 1px solid rgba(255,255,255,.78);
+}
+.consent-row,
+.privacy-note { color: #60766f; }
+
+.source-box { color: #36584f; }
+.important-note { color: #435e57; }
+.formula-box {
+  color: #0b5b47 !important;
+  background: linear-gradient(145deg,rgba(226,242,237,.62),rgba(255,255,255,.54)) !important;
+}
+.inline-notice { color: #526b64; }
+.inline-notice strong { color: #0b634d; }
+
+.level-card {
+  background: linear-gradient(145deg,rgba(255,255,255,.59),rgba(235,244,242,.46)) !important;
+}
+.level-card dd { color: #0b654e; }
+.result-symbol {
+  background: linear-gradient(145deg,#128061,#07503e);
+  border: 5px solid rgba(255,255,255,.70);
+  box-shadow: 0 14px 30px rgba(9,89,68,.18), inset 0 1px 0 rgba(255,255,255,.28);
+}
+.not-winner .result-symbol { background: linear-gradient(145deg,#70847e,#536861); }
+.result-details { background: rgba(239,247,245,.52) !important; }
+.result-details div { border-bottom-color: rgba(15,91,69,.08); }
+
+.site-footer { color: #647a74; }
+.disclaimer { color: #536a63; }
+.disclaimer span { color: #387064; }
+
+/* The trips page currently uses inline styles and sits outside Layout.
+   These important overrides bring it into the same design system without changing its behavior. */
+#root > main[style] {
+  max-width: 1160px !important;
+  padding-top: 42px !important;
+  color: var(--glass-ink) !important;
+}
+#root > main[style] > section[style] {
+  background: rgba(255,255,255,.56) !important;
+  border: 1px solid rgba(255,255,255,.76) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+#root > main[style] > section[style] > div:first-child {
+  background: linear-gradient(135deg,rgba(15,119,91,.92),rgba(6,75,59,.95)) !important;
+}
+#root > main[style] input[style],
+#root > main[style] select[style] {
+  background: rgba(255,255,255,.50) !important;
+  border: 1px solid rgba(255,255,255,.84) !important;
+  color: var(--glass-ink) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.84),0 8px 20px rgba(24,68,57,.04) !important;
+}
+#root > main[style] button[style] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28),0 10px 24px rgba(24,68,57,.07) !important;
+}
+
+@media (min-width: 760px) {
+  .nav-links { background: transparent; box-shadow: none; backdrop-filter: none; }
+  .hero { padding-top: 72px; }
+}
+@media (max-width: 759px) {
+  .nav-links,
+  .nav-links.open {
+    background: rgba(245,250,249,.82);
+    border: 1px solid rgba(255,255,255,.86);
+    box-shadow: 0 18px 50px rgba(24,68,57,.12), inset 0 1px 0 rgba(255,255,255,.9);
+    backdrop-filter: blur(24px) saturate(140%);
+  }
+  .card,
+  .prose { border-radius: 22px; }
+}
+
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+  .card,.prose,.site-header,.level-card,.source-box,.important-note,.formula-box,.inline-notice,.disclaimer {
+    background: rgba(248,251,250,.94) !important;
+  }
+}
