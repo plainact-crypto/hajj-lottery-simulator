@@ -47,8 +47,8 @@ function breadcrumbsFor(pathname: string) {
   const crumbs = [{ name: HOME_NAME, path: '/' }];
   for (let i = 0; i < parts.length; i += 1) {
     const path = `/${parts.slice(0, i + 1).join('/')}`;
-    // Only expose intermediate crumbs that are actual indexable routes or known section hubs.
-    if (i === parts.length - 1 || seoRoutes[path] || sectionNames[path]) {
+    // Never create a clickable breadcrumb for a category shell that has no real route.
+    if (i === parts.length - 1 || seoRoutes[path]) {
       crumbs.push({ name: routeLabel(path), path });
     }
   }
