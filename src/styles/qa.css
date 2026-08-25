@@ -1,5 +1,65 @@
-.breadcrumbs{width:min(1180px,calc(100% - 32px));margin:14px auto 0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.84rem;color:var(--muted,#69776f)}
+.breadcrumbs{width:min(980px,calc(100% - 32px));margin:14px auto 0;display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.84rem;color:var(--muted,#69776f)}
 .breadcrumbs>span{display:inline-flex;align-items:center;gap:8px}.breadcrumbs a{color:inherit;text-decoration:none}.breadcrumbs a:hover{text-decoration:underline}.breadcrumb-separator{opacity:.45}.breadcrumbs [aria-current="page"]{color:var(--green,#154734);font-weight:700}
 :focus-visible{outline:3px solid rgba(21,71,52,.32);outline-offset:3px;border-radius:8px}
-@media(max-width:640px){.breadcrumbs{width:min(100% - 24px,1180px);font-size:.76rem;margin-top:10px}}
+
+/* Navigation: keep the compact menu until there is genuinely enough room, and make the panel viewport-safe. */
+@media(max-width:1099px){
+  .nav-links,.nav-links.open{inset:74px 14px auto;max-height:calc(100dvh - 90px);overflow-y:auto;overscroll-behavior:contain}
+}
+
+/* Footer: grouped, readable and touch-friendly instead of one bullet-separated cloud. */
+.footer-note{margin:18px 0 12px}.footer-link-groups{display:grid;gap:12px;text-align:right}.footer-link-group{padding:12px 14px;border-top:1px solid rgba(15,91,69,.08)}.footer-link-group>strong{display:block;margin-bottom:8px;color:#31564c;font-size:.72rem}.footer-link-group>div{display:flex;flex-wrap:wrap;gap:6px 14px}.footer-link-group a{display:inline-flex;align-items:center;min-height:34px;color:var(--muted);text-decoration:none;font-size:.72rem}.footer-link-group a:hover{text-decoration:underline}
+@media(min-width:850px){.footer-link-groups{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.site-footer{width:min(100% - 40px,980px)}}
+
+/* Home: use desktop width better and let the site definition precede low-value zero-state stats. */
+@media(min-width:900px){.home-page{width:min(100% - 40px,900px)}}
+.home-page>.hero{display:flex;flex-direction:column;align-items:center}.home-page .hero-emblem{order:1}.home-page .unofficial-badge{order:2}.home-page .hero h1{order:3}.home-page .hero>p{order:4}.home-page .stats-strip{order:5;margin-top:18px;opacity:.82;max-width:360px;width:100%}
+
+/* Inputs must not trigger Safari auto-zoom on iPhone. Important explanatory microcopy is readable too. */
+@media(max-width:759px){
+  .input-wrap input,.input-wrap select,.trips-page input,.trips-page select{font-size:16px!important}
+  .home-page .field small,.home-page .privacy-note,.home-page .field-neutral-note,.home-page .dataset-explanation,.home-page .simulation-caution,.home-page .dataset-source-row,.home-page .dataset-metrics span,.home-page .stats-strip span{font-size:.82rem!important;line-height:1.75}
+  .home-page .stats-strip strong{font-size:.95rem}
+}
+
+/* Long Arabic headings should not dominate the first mobile screen. */
+@media(max-width:700px){
+  .scale-hero h1{font-size:clamp(1.9rem,9vw,2.15rem)!important;line-height:1.28}
+  .page-title h1{font-size:clamp(1.9rem,8.5vw,2.1rem)!important;line-height:1.3}
+  .breadcrumbs{width:min(100% - 24px,980px);font-size:.78rem;margin-top:10px;gap:3px 6px}.breadcrumbs>span{gap:6px}.breadcrumbs a{display:inline-flex;align-items:center;min-height:40px;padding:0 4px}
+}
+
+/* Related links are actions, not metadata. */
+.scale-related a{display:flex!important;flex-direction:column;gap:2px;font-size:.82rem!important;line-height:1.55}.scale-related a small{font-size:.68rem;color:var(--glass-muted);font-weight:600}.scale-related>span{font-size:.76rem}.scale-related>div{gap:10px 12px}
+
+/* Glass hierarchy: strongest material only on major surfaces; notices and sources get distinct meaning. */
+.card,.prose{backdrop-filter:blur(14px) saturate(125%)!important;-webkit-backdrop-filter:blur(14px) saturate(125%)!important}
+.level-card,.source-box,.formula-box,.result-details,.suggestions,.dua-list blockquote{backdrop-filter:blur(8px) saturate(115%)!important;-webkit-backdrop-filter:blur(8px) saturate(115%)!important;background:rgba(250,252,251,.70)!important}
+.source-box{border-color:rgba(46,99,84,.16)!important;background:rgba(241,247,245,.74)!important}
+.important-note,.notice-seasonal{border-color:rgba(184,137,45,.28)!important;background:linear-gradient(145deg,rgba(255,249,231,.82),rgba(248,252,249,.74))!important;box-shadow:0 12px 34px rgba(86,69,31,.08),inset 3px 0 0 rgba(184,137,45,.48)!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important}
+.notice-general{background:rgba(238,247,244,.78)!important;border-color:rgba(17,108,82,.18)!important;backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important}
+
+/* Umrah checker semantic status hierarchy. */
+.checker-results{margin-top:24px;padding:24px}.checker-result-list{display:grid;gap:12px;margin-top:18px}.checker-status{margin:0!important;align-items:flex-start}.checker-status strong{display:flex;align-items:center;gap:8px}.checker-status strong>span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;flex:0 0 auto}.status-pass{background:rgba(234,247,240,.82)!important;border-color:rgba(17,119,84,.22)!important}.status-pass strong>span{background:#e1f4e9;color:#14704e}.status-warn{background:rgba(255,248,226,.88)!important;border-color:rgba(185,139,41,.28)!important}.status-warn strong>span{background:#fff0bd;color:#835f12}.status-fail{background:rgba(255,237,235,.9)!important;border-color:rgba(170,63,52,.32)!important;box-shadow:0 12px 32px rgba(130,47,39,.09)!important}.status-fail strong{color:#8b3028!important}.status-fail strong>span{background:#f8d5d1;color:#8b3028}.checker-source{margin-top:24px;padding:24px}
+
+/* Horizontal comparison/data tables: stronger cue and a sticky identifying column. */
+.comparison-table-wrap,.data-table-wrap{position:relative;overflow-x:auto;overscroll-behavior-inline:contain;box-shadow:inset 18px 0 18px -18px rgba(12,80,61,.38),inset -18px 0 18px -18px rgba(12,80,61,.38);scrollbar-width:thin;scrollbar-color:rgba(11,107,82,.45) transparent}
+.comparison-table th:first-child,.comparison-table td:first-child,.data-table th:first-child,.data-table td:first-child{position:sticky;right:0;z-index:2;background:rgba(242,249,247,.97);box-shadow:-8px 0 12px -12px rgba(8,75,58,.45)}
+@media(max-width:759px){
+  .comparison-table-wrap::after,.data-table-wrap::after{content:'↔ اسحب لعرض باقي الأعمدة';position:sticky;right:10px;bottom:6px;display:block;width:max-content;margin:6px 10px 8px;padding:5px 9px;border-radius:999px;background:rgba(8,75,59,.88);color:#fff;font-size:.72rem;pointer-events:none;z-index:4}
+  .comparison-table th,.comparison-table td,.data-table th,.data-table td{font-size:.82rem!important;line-height:1.7}
+}
+
+/* Data/tool labels are explanatory content, not decorative captions. */
+.data-summary-card small,.data-kpis span,.history-bar-label{font-size:.8rem!important}.tool-card b,.tool-progress span,.tool-back a{font-size:.82rem!important}
+
+/* Trips now lives inside the shared shell and uses the same components. */
+.trips-page{width:min(100% - 32px,980px)}.trips-hero{max-width:760px;margin-inline:auto}.trips-fields{display:grid;gap:14px}.trips-services{margin-top:8px}.trips-services>h2,.trips-preview>h2{color:#0a5542}.trips-services>p{color:var(--glass-muted)}.trips-service-grid{display:grid;gap:12px}.trips-service{min-height:118px;padding:16px;text-align:right;border-radius:18px;border:1px solid rgba(255,255,255,.78);background:rgba(255,255,255,.46);color:var(--glass-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.8);cursor:pointer}.trips-service.active{border-color:rgba(11,107,82,.36);background:rgba(225,244,238,.72);box-shadow:0 10px 28px rgba(11,107,82,.08),inset 0 1px 0 #fff}.trips-service>span{display:block;font-size:1.55rem}.trips-service strong{display:block;margin-top:6px}.trips-service small{display:block;margin-top:4px;color:var(--glass-muted);font-size:.8rem}.trips-submit-row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px}.trips-submit-row p{margin:0}.trips-submit-row .button{width:auto;min-width:220px}.trips-preview{margin-top:26px}.trips-preview-grid{display:grid;gap:14px}.trips-preview-grid .card{padding:20px}.trips-preview-grid .card>span{font-size:1.6rem}.trips-preview-grid h3{margin:8px 0 4px;color:#0a5542}.trips-preview-grid p{margin:0;color:var(--glass-muted);line-height:1.75}
+@media(min-width:760px){.trips-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.trips-service-grid,.trips-preview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+@media(max-width:759px){
+  .footer-link-groups{gap:4px}.footer-link-group{padding:12px 4px}.footer-link-group>strong{font-size:.82rem}.footer-link-group>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px}.footer-link-group a{min-height:44px;font-size:.8rem;padding:4px 2px}
+  .trips-submit-row .button{width:100%}
+}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
