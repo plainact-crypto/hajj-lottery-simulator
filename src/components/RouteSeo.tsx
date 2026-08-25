@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import seoRoutes from '../seoRoutes.json';
+import baseSeoRoutes from '../seoRoutes.json';
+import seasonalSeoRoutes from '../seasonalSeoRoutes.json';
 
 const SITE_URL = 'https://hajj-lottery-simulator.pages.dev';
+const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes };
 const DEFAULT = seoRoutes['/' as keyof typeof seoRoutes];
 
 function setMeta(selector: string, attr: string, value: string) {
