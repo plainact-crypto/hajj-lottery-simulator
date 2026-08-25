@@ -48,9 +48,14 @@ export function Layout() {
           <Link to="/how-it-works">كيف تعمل المحاكاة</Link><span>•</span>
           <Link to="/hajj-levels">مستويات الحج</Link><span>•</span>
           <Link to="/rituals">المناسك</Link><span>•</span>
-          <Link to="/hajj-systems-world">أنظمة الحج</Link><span>•</span>
-          <Link to="/articles-sources">المصادر</Link><span>•</span>
+          <Link to="/articles-sources">المصادر والمقالات</Link><span>•</span>
+          <Link to="/official-sources">المصادر الرسمية</Link><span>•</span>
           <Link to="/about">عن الموقع</Link><span>•</span>
+          <Link to="/authors">فريق التحرير</Link><span>•</span>
+          <Link to="/editorial-policy">سياسة التحرير</Link><span>•</span>
+          <Link to="/sources-policy">سياسة المصادر</Link><span>•</span>
+          <Link to="/corrections-policy">التصحيحات</Link><span>•</span>
+          <Link to="/contact">تواصل معنا</Link><span>•</span>
           <Link to="/privacy">الخصوصية</Link><span>•</span>
           <Link to="/disclaimer">إخلاء المسؤولية</Link>
         </p>
