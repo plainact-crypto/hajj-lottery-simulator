@@ -8,6 +8,17 @@ import TripsPage from './pages/TripsPage';
 import UmrahProgramCheckerPage from './pages/UmrahProgramCheckerPage';
 import { BudgetCalculatorPage, EligibilityCheckerPage, PackingChecklistPage, ProgramComparisonPage, ToolsHubPage } from './pages/InteractiveToolsPages';
 import {
+  FirstHajjPage,
+  HajjPackingGuidePage,
+  HajjPreparationHubPage,
+  HajjRitualsHubPage,
+  HajjStepByStepPage,
+  HajjTypesPage,
+  UmrahEgyptPage,
+  UmrahHubPage,
+  UmrahVisaPage,
+} from './pages/EvergreenContentPages';
+import {
   AuthorsPage,
   ContactPage,
   CorrectionsPolicyPage,
@@ -47,6 +58,15 @@ export default function App() {
       <Route path="egypt-hajj/2027/compare-paths" element={<CompareHajjPaths2027Page />} />
       <Route path="tourist-hajj/2027" element={<TouristHajj2027Page />} />
       <Route path="egypt-hajj/unified-hajj-portal" element={<UnifiedHajjPortalPage />} />
+      <Route path="hajj-rituals" element={<HajjRitualsHubPage />} />
+      <Route path="hajj-rituals/step-by-step" element={<HajjStepByStepPage />} />
+      <Route path="hajj-rituals/types" element={<HajjTypesPage />} />
+      <Route path="hajj-preparation" element={<HajjPreparationHubPage />} />
+      <Route path="hajj-preparation/first-time" element={<FirstHajjPage />} />
+      <Route path="hajj-preparation/packing-list" element={<HajjPackingGuidePage />} />
+      <Route path="umrah" element={<UmrahHubPage />} />
+      <Route path="umrah/egypt" element={<UmrahEgyptPage />} />
+      <Route path="umrah/visa" element={<UmrahVisaPage />} />
       <Route path="about" element={<TrustAboutPage />} />
       <Route path="contact" element={<ContactPage />} />
       <Route path="editorial-policy" element={<EditorialPolicyPage />} />
