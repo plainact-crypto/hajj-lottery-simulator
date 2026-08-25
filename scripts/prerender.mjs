@@ -10,12 +10,20 @@ const SITE_URL = 'https://hajj-lottery-simulator.pages.dev';
 const baseSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seoRoutes.json'), 'utf8'));
 const seasonalSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seasonalSeoRoutes.json'), 'utf8'));
 const toolSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'toolSeoRoutes.json'), 'utf8'));
-const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes, ...toolSeoRoutes };
-const sitemap = await fs.readFile(path.join(ROOT, 'public', 'sitemap.xml'), 'utf8');
-const sitemapRoutes = [...sitemap.matchAll(/<loc>https:\/\/hajj-lottery-simulator\.pages\.dev([^<]*)<\/loc>/g)]
-  .map((match) => match[1] || '/')
-  .map((route) => route.replace(/\/$/, '') || '/');
-const routes = [...new Set([...sitemapRoutes, '/trips'])];
+
+// Scale pages live in a typed TS registry used by the React renderer. Parse only the
+// stable path/title/intro fields here so build-time prerendering has the same routes
+// without maintaining a second hand-written SEO registry.
+const scaleSource = await fs.readFile(path.join(ROOT, 'src', 'content', 'scaleContent.ts'), 'utf8');
+const scaleSeoRoutes = {};
+const scalePattern = /\{path:'([^']+)',cluster:'[^']+',title:'([^']+)',eyebrow:'[^']+',intro:'([^']+)'/g;
+for (const match of scaleSource.matchAll(scalePattern)) {
+  const [, route, title, description] = match;
+  scaleSeoRoutes[route] = { title: `${title} | محاكي قرعة الحج`, description, index: true };
+}
+
+const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes, ...toolSeoRoutes, ...scaleSeoRoutes };
+const routes = [...new Set([...Object.keys(seoRoutes), '/trips'])];
 
 const ssrEntry = path.join(SSR_DIST, 'entry-server.js');
 const { render } = await import(pathToFileURL(ssrEntry).href);
@@ -36,6 +44,7 @@ function withSeo(html, route) {
   out = replaceOrInsert(out, /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/i, `<link rel="canonical" href="${canonical}" />`);
   return out;
 }
+
 for (const route of routes) {
   const appHtml = render(route);
   let html = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
@@ -44,5 +53,10 @@ for (const route of routes) {
   await fs.mkdir(path.dirname(outputFile), { recursive: true });
   await fs.writeFile(outputFile, html, 'utf8');
 }
+
+const sitemapRoutes = routes.filter((route) => route !== '/trips' || seoRoutes['/trips']);
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapRoutes.map((route) => `  <url><loc>${SITE_URL}${route === '/' ? '/' : route}</loc></url>`).join('\n')}\n</urlset>\n`;
+await fs.writeFile(path.join(DIST, 'sitemap.xml'), sitemapXml, 'utf8');
+
 await fs.rm(SSR_DIST, { recursive: true, force: true });
-console.log(`Prerendered ${routes.length} routes with route-specific metadata.`);
+console.log(`Prerendered ${routes.length} routes with route-specific metadata and generated sitemap.`);
