@@ -4,12 +4,13 @@ import { Disclaimer } from './Disclaimer';
 
 const links = [
   ['/', 'المحاكي'],
+  ['/guides', 'الأدلة والمقالات'],
   ['/umrah-1448-checker', 'فاحص العمرة 1448'],
   ['/how-it-works', 'كيف تعمل المحاكاة'],
   ['/hajj-levels', 'مستويات الحج'],
   ['/rituals', 'مناسك الحج'],
   ['/hajj-systems-world', 'أنظمة الحج حول العالم'],
-  ['/articles-sources', 'المقالات والمصادر'],
+  ['/articles-sources', 'المصادر'],
   ['/about', 'عن الموقع'],
 ] as const;
 
@@ -38,8 +39,9 @@ export function Layout() {
       <main><Outlet /></main>
       <footer className="site-footer">
         <Disclaimer />
-        <p>محاكي قرعة الحج — مشروع مستقل غير رسمي</p>
+        <p>محاكي قرعة الحج — مشروع مستقل غير رسمي للتوعية والمحاكاة التعليمية</p>
         <p className="footer-links">
+          <Link to="/guides">الأدلة والمقالات</Link><span>•</span>
           <Link to="/umrah-1448-checker">فاحص العمرة 1448</Link><span>•</span>
           <Link to="/how-it-works">كيف تعمل المحاكاة</Link><span>•</span>
           <Link to="/hajj-levels">مستويات الحج</Link><span>•</span>
