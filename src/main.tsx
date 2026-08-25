@@ -9,6 +9,7 @@ import './styles/seasonal.css';
 import './styles/data.css';
 import './styles/tools.css';
 import './styles/evergreen.css';
+import './styles/scale.css';
 
 const rootElement = document.getElementById('root')!;
 const app = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>;
