@@ -6,6 +6,7 @@ import { RouteSeo } from './RouteSeo';
 const links = [
   ['/', 'المحاكي'],
   ['/egypt-hajj/2027', 'حج 2027'],
+  ['/data/hajj-tourism-history', 'البيانات'],
   ['/guides', 'الأدلة والمقالات'],
   ['/umrah-1448-checker', 'فاحص العمرة 1448'],
   ['/how-it-works', 'كيف تعمل المحاكاة'],
@@ -47,6 +48,7 @@ export function Layout() {
           <Link to="/egypt-hajj/2027">دليل الحج في مصر 2027</Link><span>•</span>
           <Link to="/hajj-lottery/2027">حج القرعة 2027</Link><span>•</span>
           <Link to="/tourist-hajj/2027">الحج السياحي 2027</Link><span>•</span>
+          <Link to="/data/hajj-tourism-history">إحصاءات الحج التاريخية</Link><span>•</span>
           <Link to="/guides">الأدلة والمقالات</Link><span>•</span>
           <Link to="/umrah-1448-checker">فاحص العمرة 1448</Link><span>•</span>
           <Link to="/how-it-works">كيف تعمل المحاكاة</Link><span>•</span>
