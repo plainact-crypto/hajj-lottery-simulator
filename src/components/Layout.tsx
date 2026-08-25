@@ -2,6 +2,7 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Disclaimer } from './Disclaimer';
 import { RouteSeo } from './RouteSeo';
+import { SeoEnhancements } from './SeoEnhancements';
 
 const links = [
   ['/egypt-hajj/2027', 'الحج في مصر'],
@@ -26,6 +27,7 @@ export function Layout() {
         <button className="menu-button" type="button" aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'} aria-expanded={open} onClick={() => setOpen((value) => !value)}><span /><span /><span /></button>
         <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="التنقل الرئيسي">{links.map(([to, label]) => <NavLink key={to} to={to}>{label}</NavLink>)}</nav>
       </div></header>
+      <SeoEnhancements />
       <main><Outlet /></main>
       <footer className="site-footer">
         <Disclaimer />
