@@ -58,7 +58,8 @@ for (const route of routes) {
 
   const hrefs = [...html.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1].split('#')[0].split('?')[0]);
   for (const href of hrefs) {
-    if (!href || href === '/' || /\.[a-z0-9]{2,5}$/i.test(href)) continue;
+    const leaf = href.split('/').filter(Boolean).at(-1) || '';
+    if (!href || href === '/' || leaf.includes('.')) continue;
     const clean = href.replace(/\/$/, '') || '/';
     if (!routeSet.has(clean) && !(await exists(routeFile(clean)))) warnings.push(`Internal link target is outside sitemap/known routes: ${route} -> ${clean}`);
   }
