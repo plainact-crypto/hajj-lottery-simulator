@@ -5,6 +5,7 @@ import App from './App';
 import './styles/main.css';
 import './styles/polish.css';
 import './styles/glass.css';
+import './styles/seasonal.css';
 
 const rootElement = document.getElementById('root')!;
 const app = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>;
