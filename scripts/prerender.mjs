@@ -7,7 +7,9 @@ const DIST = path.join(ROOT, 'dist');
 const SSR_DIST = path.join(ROOT, '.ssr-dist');
 const SITE_URL = 'https://hajj-lottery-simulator.pages.dev';
 
-const seoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seoRoutes.json'), 'utf8'));
+const baseSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seoRoutes.json'), 'utf8'));
+const seasonalSeoRoutes = JSON.parse(await fs.readFile(path.join(ROOT, 'src', 'seasonalSeoRoutes.json'), 'utf8'));
+const seoRoutes = { ...baseSeoRoutes, ...seasonalSeoRoutes };
 const sitemap = await fs.readFile(path.join(ROOT, 'public', 'sitemap.xml'), 'utf8');
 const sitemapRoutes = [...sitemap.matchAll(/<loc>https:\/\/hajj-lottery-simulator\.pages\.dev([^<]*)<\/loc>/g)]
   .map((match) => match[1] || '/')
