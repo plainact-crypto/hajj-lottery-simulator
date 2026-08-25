@@ -8,6 +8,7 @@ import './styles/glass.css';
 import './styles/seasonal.css';
 import './styles/data.css';
 import './styles/tools.css';
+import './styles/evergreen.css';
 
 const rootElement = document.getElementById('root')!;
 const app = <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>;
