@@ -1,0 +1,26 @@
+.data-page { width: min(100% - 32px, 980px); }
+.data-overview-grid { display: grid; gap: 14px; margin: 18px 0; }
+.data-summary-card { padding: 22px; text-align: center; }
+.data-summary-card strong { display: block; margin: 8px 0 2px; color: #0a5946; font-size: 1.6rem; }
+.data-summary-card small { color: var(--glass-muted); font-size: .66rem; }
+.data-season { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: rgba(255,255,255,.48); border: 1px solid rgba(255,255,255,.8); color: #40655b; font-size: .65rem; font-weight: 800; }
+.data-rate { margin: 14px auto 3px; width: fit-content; padding: 7px 10px; border-radius: 12px; color: #0a5b47; background: rgba(224,242,236,.62); border: 1px solid rgba(255,255,255,.78); font-weight: 800; }
+.history-bars { display: grid; gap: 16px; margin-top: 20px; }
+.history-bar-label { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 6px; font-size: .73rem; }
+.history-bar-label strong { color: #0a5946; }
+.history-bar-track { height: 12px; overflow: hidden; border-radius: 999px; background: rgba(15,91,69,.08); border: 1px solid rgba(255,255,255,.7); }
+.history-bar-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#17836a,#0b604c); box-shadow: inset 0 1px 0 rgba(255,255,255,.26); }
+.data-kpis { display: grid; gap: 10px; margin: 18px 0; }
+.data-kpis > div { padding: 14px; border-radius: 15px; background: rgba(255,255,255,.42); border: 1px solid rgba(255,255,255,.78); }
+.data-kpis span { display: block; color: var(--glass-muted); font-size: .63rem; }
+.data-kpis strong { display: block; margin-top: 4px; color: #0a5946; font-size: .95rem; }
+.data-table-wrap { width: 100%; overflow-x: auto; margin: 18px 0; border-radius: 16px; border: 1px solid rgba(255,255,255,.74); }
+.data-table { width: 100%; min-width: 600px; border-collapse: collapse; background: rgba(255,255,255,.28); }
+.data-table th, .data-table td { padding: 12px 13px; text-align: right; border-bottom: 1px solid rgba(15,91,69,.08); font-size: .72rem; }
+.data-table th { color: #0a5946; background: rgba(231,243,239,.55); font-weight: 800; }
+.data-table tr:last-child td { border-bottom: 0; }
+.season-data-card { margin-top: 18px; }
+@media (min-width: 700px) {
+  .data-overview-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .data-kpis { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
