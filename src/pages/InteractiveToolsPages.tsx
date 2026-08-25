@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const money = new Intl.NumberFormat('ar-EG', { maximumFractionDigits: 0 });
@@ -21,7 +21,8 @@ const packingGroups = [
   ['التقنية والتنظيم',['شاحن الهاتف','باور بانك مسموح بالطيران','نسخة من أرقام الطوارئ','حقيبة صغيرة يومية']],
 ] as const;
 export function PackingChecklistPage(){
-  const items=packingGroups.flatMap(([,xs])=>xs); const [checked,setChecked]=useState<Record<string,boolean>>(()=>{try{return JSON.parse(localStorage.getItem('hajjPacking')||'{}')}catch{return {}}});
+  const items=packingGroups.flatMap(([,xs])=>xs); const [checked,setChecked]=useState<Record<string,boolean>>({});
+  useEffect(()=>{try{setChecked(JSON.parse(localStorage.getItem('hajjPacking')||'{}'))}catch{setChecked({})}},[]);
   const done=items.filter(x=>checked[x]).length; const toggle=(x:string)=>{const next={...checked,[x]:!checked[x]};setChecked(next);localStorage.setItem('hajjPacking',JSON.stringify(next));};
   return <ToolShell title="قائمة تجهيز شنطة الحج" intro="قائمة عملية قابلة للتعديل ذهنيًا حسب حالتك وبرنامجك. يتم حفظ العلامات محليًا على جهازك فقط."><div className="tool-progress"><strong>{done} / {items.length}</strong><span>تم تجهيزها</span><progress value={done} max={items.length}/></div>{packingGroups.map(([g,xs])=><section className="tool-section card" key={g}><h2>{g}</h2>{xs.map(x=><label className="check-row" key={x}><input type="checkbox" checked={Boolean(checked[x])} onChange={()=>toggle(x)}/><span>{x}</span></label>)}</section>)}<button className="button button-support" onClick={()=>{setChecked({});localStorage.removeItem('hajjPacking')}}>إعادة ضبط القائمة</button></ToolShell>;
 }
