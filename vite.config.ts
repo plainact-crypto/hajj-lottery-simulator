@@ -8,7 +8,7 @@ const stripRemoteFonts = {
     if (!id.endsWith('/src/styles/main.css') && !id.endsWith('\\src\\styles\\main.css')) return null;
 
     const optimized = code
-      .replace(/@import\s+url\(['"]https:\/\/fonts\.googleapis\.com[^;]+;\s*/g, '')
+      .replace(/^@import[^\n]*\n\s*/m, '')
       .replace(/'Noto Kufi Arabic',\s*/g, '')
       .replace(/'Noto Naskh Arabic',\s*serif/g, "Tahoma, Arial, sans-serif");
 
